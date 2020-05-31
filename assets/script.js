@@ -2,37 +2,74 @@
 const generateBtn = document.querySelector("#generate");
 
 //Defined characters as strings and then converted to arrays.
-const lowerCase = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
-const lowerCaseArray = lowerCase.split(" ");
-const upperCase = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
-const upperCaseArray = upperCase.split(" ");
-const numbers = "0 1 2 3 4 5 6 7 8 9";
-const numberArray = numbers.split(" ");
-const specials = "! @ # $ % ^ & *";
-const specialArray = specials.split(" ");
+const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numbers = "0123456789";
+const specials = "!@#$%^&*";
+const specialArray = specials.split("");
+const lowerCaseArray = lowerCase.split("");
+const upperCaseArray = upperCase.split("");
+const numberArray = numbers.split("");
+let PASSWORD = [];
 
-const passwordLength = prompt(
-  "How many characters do you want your password? Please pick a number between 8 and 128."
-);
-const upperCaseConfirm = confirm(
-  "Does your password require upper case letters?"
-);
-const lowerCaseConfirm = confirm(
-  "Does your password require lower case letters?"
-);
-const numbersConfirm = confirm("Does your password require numbers?");
-const specialChaConfirm = confirm(
-  "Does your password require special characters?"
-);
+function generatePassword() {
+  //this will ask how long the password should be
+  const passwordLength = prompt(
+    "How many characters do you want your password? Please pick a number between 8 and 128."
+  );
+  let arrayOfArrays = [];
+  //these prompts will ask if your password requires certain characters and if it does, it will add them to the array of options
+  function upperCaseConfirm() {
+    if (confirm("Does your password require upper case letters?")) {
+      arrayOfArrays.push(upperCaseArray);
+    }
+    console.log(arrayOfArrays);
+  }
+  upperCaseConfirm();
+  function lowerCaseConfirm() {
+    if (confirm("Does your password require lower case letters?")) {
+      arrayOfArrays.push(lowerCaseArray);
+    }
+    console.log(arrayOfArrays);
+  }
+  lowerCaseConfirm();
+  function numbersConfirm() {
+    if (confirm("Does your password require numbers?")) {
+      arrayOfArrays.push(numberArray);
+    }
+    console.log(arrayOfArrays);
+  }
+  numbersConfirm();
+  function specialChaConfirm() {
+    if (confirm("Does your password require special characters?")) {
+      arrayOfArrays.push(specialArray);
+    }
+    console.log(arrayOfArrays);
+  }
+  specialChaConfirm();
+  console.log(arrayOfArrays.length);
+  //for each character of the password, it needs to randomly select the type of character (number, lower case, etc.) and then select the character itself
+  for (let i = 0; i < passwordLength; i++) {
+    console.log(passwordLength, "password length");
+    let randomType = Math.floor(Math.random() * arrayOfArrays.length);
+    console.log(randomType, "which category the character will be");
+    console.log(arrayOfArrays[randomType]);
+    let passwordCharacter =
+      arrayOfArrays[randomType][
+        Math.floor(Math.random() * arrayOfArrays[randomType].length)
+      ];
+    console.log(passwordCharacter, "the character chosen");
+    PASSWORD.push(passwordCharacter);
+  }
+  console.log(PASSWORD, "final password");
+}
 
 // Write password to the #password input
 function writePassword() {
-  let password = generatePassword();
+  generatePassword();
   let passwordText = document.querySelector("#password");
 
-  passwordText.length = passwordLength;
-
-  passwordText.value = password;
+  passwordText.value = PASSWORD;
 }
 
 // Add event listener to generate button
