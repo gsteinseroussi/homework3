@@ -74,6 +74,7 @@ function generatePassword() {
 // This will print the completed password in the text box
 function writePassword() {
   generatePassword();
+
   let passwordText = document.querySelector("#password");
 
   passwordText.value = PASSWORD.join("");
