@@ -74,6 +74,20 @@ function generatePassword() {
 // This will print the completed password in the text box
 function writePassword() {
   generatePassword();
+  console.log(PASSWORD);
+  //the following loop will go through the password to make sure it contains at least one of every single required character type. If it doesn't, it'll restart the process.
+  for (let i = 0; i < arrayOfArrays.length; i++) {
+    let counter = 0;
+    for (let k = 0; k < PASSWORD.length; k++) {
+      console.log(arrayOfArrays[i].includes(PASSWORD[k]));
+      if (arrayOfArrays[i].includes(PASSWORD[k]) === false) {
+        counter++;
+      }
+      if (counter === PASSWORD.length) {
+        writePassword();
+      }
+    }
+  }
 
   let passwordText = document.querySelector("#password");
 
